@@ -1,39 +1,36 @@
 public class DirectMappingLine{
     boolean bv;
-    int tag;
-    int tagSize;
+    String tag;
     int[] block;
 
     public void setBv(boolean bv) {
         this.bv = bv;
     }
-
-    public int getTag() {
-        return this.tag;
-    }
-
-    public void setTag(int tag) {
-        this.tag = tag;
-    }
-
-    public int getTagSize() {
-        return this.tagSize;
+    
+    public boolean getBv(){
+        return bv;
     }
 
     public int getBlockSize(){
         return block.length;
     }
     
-    DirectMappingLine(int blockSize,int tagSize){
+    DirectMappingLine(int blockSize){
         bv = false;
-        this.tagSize = tagSize;
         block = new int[blockSize];
     }
     public String toString(){
-        String result = bv? "1": "0" + "\t"+ tag + "\t";
+        StringBuilder result= new StringBuilder((bv? "1": "0") + "\t");
+        result.append(tag + "\t");
         for(int i: block){
-            result += "word ";
+            result.append("A: "+i+" ");
         }
-        return result;
+        return result.toString();
+    }
+    public void acess(String tag,int word){
+        bv = true;
+        this.tag = tag;
+        block[word]++;
+
     }
 }

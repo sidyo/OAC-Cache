@@ -2,7 +2,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
-
+	// 1 1 2 32 8 4
 	public static void main(String[] args) {
 		CacheMemoryInterface cache = null;
 		try{
@@ -10,6 +10,7 @@ public class App {
 		}catch(cacheSizeTooSmallException e){
 			System.out.println("Cache Size too Small. Try Again.");
 		}
+		cache.acessMemory(60);
 		System.out.println(cache.toString());
 	}
 
