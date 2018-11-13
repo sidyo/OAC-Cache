@@ -1,7 +1,11 @@
 public class DirectMappingLine{
-    boolean bv;
-    String tag;
-    int[] block;
+    private boolean bv;
+    private String tag;
+    private int[] block;
+
+    public String getTag() {
+        return this.tag;
+    }
 
     public void setBv(boolean bv) {
         this.bv = bv;
@@ -31,6 +35,12 @@ public class DirectMappingLine{
         bv = true;
         this.tag = tag;
         block[word]++;
-
+    }
+    public void reset(){
+        bv= false;
+        tag = null;
+        for(int i = 0; i<block.length;i++){
+            block[i]=0;
+        }
     }
 }
