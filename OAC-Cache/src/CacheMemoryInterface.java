@@ -1,4 +1,4 @@
 public interface CacheMemoryInterface{
-    public void acessMemory(int address);
+    public void accessMemory(int address);
     
 }

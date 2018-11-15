@@ -5,14 +5,21 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class App {
-	// 1 1 2 32 8 4 test.txt
+	/*
+	C:\Users\Vini\Desktop\aqui\OAC-Cache\OAC-Cache\src\test.txt
+	1 1 2 32 8 4 
+	2 1 2 32 8 4 2 1
+	*/
+
 	public static void main(String[] args) {
 		CacheMemoryInterface cache = null;
-		try {
-			cache = createCache();
-		} catch (cacheSizeTooSmallException e) {
-			System.out.println("Cache Size too Small. Try Again.");
-		}
+		do{
+			try {
+				cache = createCache();
+			} catch (cacheSizeTooSmallException e) {
+				System.out.println("Cache Size too Small. Try Again.");
+			}
+		}while(cache == null);
 		accessFile(cache);
 
 
@@ -22,11 +29,12 @@ public class App {
 	private static CacheMemoryInterface createCache() {
 		Scanner in = new Scanner(System.in);
 		int cacheType = 0;
-		int acessTimeDelay = -1;
+		int accessTimeDelay = -1;
 		int missPenalty = -1;
 		int cacheSize = -1;
 		int wordsPerBlock = -1;
 		int wordSize = -1;
+		
 		do {
 			try {
 				System.out.print(" 1 - Direct Mapping.\n 2 - Set Associative.\nSelect the cache policy: ");
@@ -41,16 +49,16 @@ public class App {
 		} while (cacheType != 1 && cacheType != 2);
 		do {
 			try {
-				System.out.print("Set the acess time delay(ms): ");
-				acessTimeDelay = in.nextInt();
-				if (acessTimeDelay < 0) {
+				System.out.print("Set the access time delay(ms): ");
+				accessTimeDelay = in.nextInt();
+				if (accessTimeDelay < 0) {
 					System.out.println("Delay time must be positive.");
 				}
 			} catch (InputMismatchException e) {
 				System.out.println("Invalid Entry.");
 				in.nextLine();
 			}
-		} while (acessTimeDelay < 0);
+		} while (accessTimeDelay < 0);
 		do {
 			try {
 				System.out.print("Set the penalty for a miss(ms): ");
@@ -100,9 +108,36 @@ public class App {
 			}
 		} while (wordsPerBlock < 1);
 		if (cacheType == 1) {
-			return new DirectMappingCache(acessTimeDelay, missPenalty, cacheSize, wordsPerBlock, wordSize);
+			return new DirectMappingCache(accessTimeDelay, missPenalty, cacheSize, wordsPerBlock, wordSize);
 		} else {
-			return null;
+			int numberOfSets = -1;
+			int policy = 0;
+			do {
+				try {
+					System.out.print("Set the number of Sets: ");
+					numberOfSets = in.nextInt();
+					if (numberOfSets <= 1 || !((numberOfSets & (numberOfSets - 1)) == 0)) {
+						System.out.println("Number of sets must be higher than 1 and a power of 2.");
+					}
+				} catch (InputMismatchException e) {
+					System.out.println("Invalid Entry.");
+					in.nextLine();
+				}
+			} while (numberOfSets <= 1 || !((numberOfSets & (numberOfSets - 1)) == 0));
+			do {
+				try {
+					System.out.println("1 - Sequential.\n2 - Random.");
+					System.out.print("Select the replacement policy: ");
+					policy = in.nextInt();
+					if (policy != 1 && policy != 2) {
+						System.out.println("Please select a valid policy.");
+					}
+				} catch (InputMismatchException e) {
+					System.out.println("Invalid Entry.");
+					in.nextLine();
+				}
+			} while (policy != 1 && policy != 2);
+			return new SetAssociativeCache(accessTimeDelay, missPenalty, cacheSize, wordsPerBlock, wordSize, numberOfSets, policy);
 		}
 	}
 
@@ -121,7 +156,7 @@ public class App {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
 			while((line = br.readLine())!=null){
-				cache.acessMemory(Integer.parseInt(line));
+				cache.accessMemory(Integer.parseInt(line));
 			}
 		}catch(Exception e){
 			e.printStackTrace();

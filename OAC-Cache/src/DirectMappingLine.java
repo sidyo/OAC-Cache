@@ -19,7 +19,7 @@ public class DirectMappingLine{
         return block.length;
     }
     
-    DirectMappingLine(int blockSize){
+    public DirectMappingLine(int blockSize){
         bv = false;
         block = new int[blockSize];
     }
@@ -31,7 +31,7 @@ public class DirectMappingLine{
         }
         return result.toString();
     }
-    public void acess(String tag,int word){
+    public void access(String tag,int word){
         bv = true;
         this.tag = tag;
         block[word]++;
