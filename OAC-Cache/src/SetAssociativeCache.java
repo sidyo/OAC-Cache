@@ -10,7 +10,7 @@ public class SetAssociativeCache implements CacheMemoryInterface {
         
         this.accessTimeDelay = accessTimeDelay;
         this.missPenalty = missPenalty;
-        this.cacheSize = cacheSize;
+        this.cacheSize = cacheSize *8;
         this.wordsPerBlock = wordsPerBlock;
         this.wordSize = wordSize;
         sets = new SetAssociativeSet[numberOfSets];
