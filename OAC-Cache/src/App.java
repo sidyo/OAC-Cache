@@ -146,7 +146,7 @@ public class App {
 		File file = null;
 		do {
 			System.out.print("Type the path to the file you want to read: ");
-			String filename = in.next();
+			String filename = in.next().trim();
 			file = new File(filename);
 			if (!file.canRead()) {
 				System.out.println("Cannot find the file " + filename + ". Try again.");
@@ -156,7 +156,7 @@ public class App {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
 			while((line = br.readLine())!=null){
-				cache.accessMemory(Integer.parseInt(line));
+				cache.accessMemory(Integer.parseInt(line.trim()));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
