@@ -40,6 +40,7 @@ public class SetAssociativeSet {
                 return;
             }
         }
+        missCounter++;
         if(policy == 1){
             policySequential(tag, word);
         }else if (policy == 2){

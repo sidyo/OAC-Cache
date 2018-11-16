@@ -1,5 +1,3 @@
-import java.io.Console;
-
 public class SetAssociativeCache implements CacheMemoryInterface {
     private int accessTimeDelay, missPenalty, cacheSize, wordsPerBlock, wordSize, tagSize;
     private SetAssociativeSet[] sets;
@@ -66,8 +64,8 @@ public class SetAssociativeCache implements CacheMemoryInterface {
     public String toString(){  
         int totalTime = (getHits()*accessTimeDelay+getMisses()*missPenalty);
         StringBuilder result = new StringBuilder("Access Time Delay: " + accessTimeDelay + ". Miss Penalty: " + missPenalty + ".\n");
-        result.append("Total Accesses: "+accessCounter+". Hit Counter: "+getHits()+"("+(getHits()/(double)accessCounter)+"%). Miss Counter: "+getMisses()+"("+(getMisses()*100.0/(double)accessCounter)+"%).\n");
-        result.append("Total Time: "+totalTime+"ms. Hit Time: "+getHits()*accessTimeDelay+"ms("+(getHits()*accessTimeDelay*100.0)/(double)totalTime+"%). Miss Time: "+getMisses()*missPenalty+"ms("+(getMisses()*missPenalty*100.0)/(double)totalTime+"%).\n");
+        result.append("Total Accesses: "+accessCounter+". Hit Counter: "+getHits()+"("+(getHits()*100.0/(double)accessCounter)+"%). Miss Counter: "+getMisses()+"("+(getMisses()*100.0/(double)accessCounter)+"%).\n");
+        result.append("Total Time: "+totalTime+"ms. Average access time: "+(getHits()*accessTimeDelay+getMisses()*missPenalty)/(double)accessCounter+"ms. Hit Time: "+getHits()*accessTimeDelay+"ms("+(getHits()*accessTimeDelay*100.0)/(double)totalTime+"%). Miss Time: "+getMisses()*missPenalty+"ms("+(getMisses()*missPenalty*100.0)/(double)totalTime+"%).\n");
         int bitsBlock = Double.valueOf(Math.log(wordsPerBlock)/Math.log(2.0)).intValue();
         int bitsSet = Double.valueOf(Math.log(sets.length) / Math.log(2)).intValue();
         result.append("Address: "+(wordSize-bitsSet-bitsBlock)+"(Tag) "+bitsSet+"(Set) "+bitsBlock+"(Word)\n");

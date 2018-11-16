@@ -36,7 +36,7 @@ public class DirectMappingCache implements CacheMemoryInterface {
         StringBuilder result = new StringBuilder("Access Time Delay: " + accessTimeDelay + ". Miss Penalty: " + missPenalty + ".\n");
         result.append("Total Cache Size: " + cacheSize + ". Used Size: " + usedSize()+ "("+((usedSize()*100.0)/(double)cacheSize) + "%)\n");
         result.append("Total Accesses: "+accessCounter+". Hit Counter: "+hitCounter+"("+(hitCounter*100.0/(double)accessCounter)+"%). Miss Counter: "+missCounter+"("+(missCounter*100.0/(double)accessCounter)+"%).\n");
-        result.append("Total Time: "+totalTime+"ms. Hit Time: "+hitCounter*accessTimeDelay+"ms("+(hitCounter*accessTimeDelay*100.0)/(double)totalTime+"%). Miss Time: "+missCounter*missPenalty+"ms("+((missCounter*missPenalty*100.0)/(double)totalTime+"%).\n"));
+        result.append("Total Time: "+totalTime+"ms. Average access time: "+(hitCounter*accessTimeDelay+missCounter*missPenalty)/(double)accessCounter+"ms. Hit Time: "+hitCounter*accessTimeDelay+"ms("+(hitCounter*accessTimeDelay*100.0)/(double)totalTime+"%). Miss Time: "+missCounter*missPenalty+"ms("+((missCounter*missPenalty*100.0)/(double)totalTime+"%).\n"));
         int bitsBlock = Double.valueOf(Math.log(wordsPerBlock)/Math.log(2.0)).intValue();
         result.append("Address: "+(wordSize-tagSize-bitsBlock)+"(Tag) "+tagSize+"(Line) "+bitsBlock+"(Word)\n");
         result.append("BV\tTag\tBlocks\n");
